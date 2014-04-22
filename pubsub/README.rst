@@ -4,9 +4,13 @@ Publish / Subscribe
 =================
 
 
-A publish/subscribe pattern allow a message can be past
-to multiple consumers unlike the worker pattern. The producer sends
-messages directly to the exchange.
+A publish/subscribe pattern allow a message can be past to multiple
+consumers unlike the worker pattern. The producer sends
+messages directly to the exchange where it follows its rules for
+distributing the messages.
+
+
+
 
 .. image:: ../images/pubsub.png
 
@@ -53,6 +57,7 @@ The producer sends messages to the exchange. Same as in the basic example
     4 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
 
 
+Use the **rabbitmqctl** command line admin tool to list the queues.
 
 .. code-block:: bash
 
@@ -78,6 +83,9 @@ The exchange makes the discision of how to handle the message. It's
 options are to append to a queue, append to many queues,
 or discarded the message. The desision is based on the exchange types. The
 following command show the types:
+
+The rules, known as the exchange types are:
+**direct**, **topic**, **headers** and **fanout**.
 
 
 .. code-block:: bash
@@ -146,6 +154,14 @@ ________
         p = Consumer()
         p.receive(p.callback)
 
+
+
+
+
+
+Here I am running 3 seperate **consumer.py** on different terminals. Notice
+the numbers at the start of the lines are all unique. Each consumer receives
+a different message from the set of messages the producer sends.
 
 .. code-block:: bash
 

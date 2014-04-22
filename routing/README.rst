@@ -6,7 +6,6 @@ Routing
 
 
 
-
 .. image:: ../images/routing.png
 
 

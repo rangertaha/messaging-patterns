@@ -4,9 +4,7 @@ Worker Queue
 =================
 
 This is an example of a work queue. This type of queue is used to
-distribute messages to multiple workers.
-
-This is the second simplest pattern for sending messages. The fist being the
+distribute messages to multiple workers. This is the second simplest pattern for sending messages. The fist being the
 basic. This example also has three parts.  The **Producer**, **Queue**,
 and the **Consumers**. The producer sends/produces messages which are sent to
 the queue. The queue is the RabbitMQ server. The consumers
