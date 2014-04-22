@@ -9,7 +9,7 @@ A publish/subscribe pattern allow a message can be past
  messages directly to the exchange.
 
     * Producer
-    * Exchanger
+    * Exchange
     * Queue
     * Consumer
 
