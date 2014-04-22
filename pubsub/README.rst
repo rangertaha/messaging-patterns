@@ -154,7 +154,7 @@ exchange as a class.
 
 
 
-
+.. note:: This is a note
 
 
 
