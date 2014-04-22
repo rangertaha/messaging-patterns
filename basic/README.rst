@@ -4,11 +4,11 @@ A Basic Example
 This is the simplest pattern for sending messages I am using RabbitMQ as
 the broker. This example has three parts. The **Producer**, **Queue**,
 and the **Consumer**. The producer sends/produces messages which are sent to
- the queue. The queue is the RabbitMQ server. The consumer
- retrieves/consumes the messages from the queue.
+the queue. The queue is the RabbitMQ server. The consumer
+retrieves/consumes the messages from the queue.
 
 
-.. image:: ./images/basic.png
+.. image:: ../images/basic.png
 
 
 
