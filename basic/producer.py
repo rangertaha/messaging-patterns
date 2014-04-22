@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 """
+A producer is a user application that sends messages
 """
 __author__ = 'rangertaha <rangertaha@gmail.com>'
 from datetime import datetime
@@ -12,7 +13,6 @@ class Producer(Queue):
     """
     def __init__(self):
         Queue.__init__(self, queue='basic')
-
 
 if __name__ == '__main__':
     NOW = datetime.now()

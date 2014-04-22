@@ -45,7 +45,7 @@ ________
 
 .. code-block:: bash
 
-    rangertaha@Ops:~/messaging-patterns/workers$ python producer.py
+    rangertaha@Coder:~/messaging-patterns/workers$ python producer.py
     0 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     1 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     2 2014-04-22 00:10:16.946810 - Basic - Hello World sent
@@ -61,7 +61,16 @@ ________
     12 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     13 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     14 2014-04-22 00:10:16.946810 - Basic - Hello World sent
-    rangertaha@Ops:~/messaging-patterns/workers$
+    rangertaha@Coder:~/messaging-patterns/workers$
+
+
+
+.. code-block:: bash
+
+    rangertaha@Coder:~/messaging-patterns/workers$ sudo rabbitmqctl list_queues
+    Listing queues ...
+    basic	15
+    ...done.
 
 
 
@@ -79,9 +88,7 @@ ________
 
 
 
-
-
-Consumer
+Consumers
 ________
 
 .. code-block:: python
@@ -96,7 +103,7 @@ ________
 
         def callback(self, ch, method, properties, body):
             print 'Received: {0}'.format(body)
-            time.sleep(5)
+            time.sleep(1)
 
     if __name__ == '__main__':
         p = Consumer()
@@ -105,7 +112,7 @@ ________
 
 .. code-block:: bash
 
-    rangertaha@Ops:~/messaging-patterns/workers$ python consumer.py
+    rangertaha@Coder:~/messaging-patterns/workers$ python consumer.py
     0 2014-04-22 00:10:16.946810 - Basic - Hello World received
     3 2014-04-22 00:10:16.946810 - Basic - Hello World received
     6 2014-04-22 00:10:16.946810 - Basic - Hello World received
@@ -116,7 +123,7 @@ ________
 
 .. code-block:: bash
 
-    rangertaha@Ops:~/messaging-patterns/workers$ python consumer.py
+    rangertaha@Coder:~/messaging-patterns/workers$ python consumer.py
     1 2014-04-22 00:10:16.946810 - Basic - Hello World received
     4 2014-04-22 00:10:16.946810 - Basic - Hello World received
     7 2014-04-22 00:10:16.946810 - Basic - Hello World received
@@ -127,7 +134,7 @@ ________
 
 .. code-block:: bash
 
-    rangertaha@Ops:~/messaging-patterns/workers$ python consumer.py
+    rangertaha@Coder:~/messaging-patterns/workers$ python consumer.py
     2 2014-04-22 00:10:16.946810 - Basic - Hello World received
     5 2014-04-22 00:10:16.946810 - Basic - Hello World received
     8 2014-04-22 00:10:16.946810 - Basic - Hello World received

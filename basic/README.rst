@@ -3,8 +3,9 @@
 A Basic Example
 =================
 
-This example has three parts. The Producer, Queue, and the Consummer. The
-producer sends produces messages places them in the queue. The
+This example has three parts. The Producer, Queue, and the Consumer. The
+producer sends/produces messages and places them in the queue. The queue is
+the RabbitMQ server and the consumer retrieves the message.
 
 
 .. image:: ../images/basic.png
@@ -13,6 +14,8 @@ producer sends produces messages places them in the queue. The
 
 Producer
 ________
+
+A producer is a user application that sends messages.
 
 .. code-block:: python
 
@@ -32,7 +35,7 @@ ________
 
 .. code-block:: bash
 
-    rangertaha@Ops:~/messaging-patterns/basic$ python producer.py
+    rangertaha@Coder:~/messaging-patterns/basic$ python producer.py
     0 2014-04-22 00:19:59.497745 - Basic - Hello World sent
     1 2014-04-22 00:19:59.497745 - Basic - Hello World sent
     2 2014-04-22 00:19:59.497745 - Basic - Hello World sent
@@ -41,9 +44,13 @@ ________
 
 
 
+.. code-block:: bash
 
-
-
+    rangertaha@Coder:~/messaging-patterns/basic$ sudo rabbitmqctl list_queues
+    Listing queues ...
+    basic	5
+    ...done.
+    
 
 
 
@@ -67,6 +74,8 @@ ________
 Consumer
 ________
 
+A consumer is a user application that receives messages.
+
 .. code-block:: python
 
     #!/usr/bin/env python
@@ -86,7 +95,7 @@ ________
 
 .. code-block:: bash
 
-    rangertaha@Ops:~/messaging-patterns/basic$ python consumer.py
+    rangertaha@Coder:~/messaging-patterns/basic$ python consumer.py
     0 2014-04-22 00:19:59.497745 - Basic - Hello World received
     1 2014-04-22 00:19:59.497745 - Basic - Hello World received
     2 2014-04-22 00:19:59.497745 - Basic - Hello World received
@@ -107,6 +116,8 @@ ________
 
 Queue
 ______
+
+A queue is a buffer that stores messages.
 
 .. code-block:: python
 

@@ -1,12 +1,13 @@
 
 
-Example RabbitMQ Messaging Patterns
+Example Messaging Patterns
 =========================
 
-Simple queueing patterns by examples
+Simple messaging patterns using AMQP/RabbitMQ
 
 
-Quick start
+
+Required
 -----------
 
     * Install RabbitMQ  https://www.rabbitmq.com/download.html
