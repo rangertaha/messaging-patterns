@@ -23,8 +23,8 @@ class Queue:
                       routing_key=self.queue,
                       body=msg)
 
-    def receive(self, callback):
-        self.channel.basic_consume(callback,
+    def receive(self):
+        self.channel.basic_consume(self.callback,
                       queue=self.queue,
                       no_ack=True)
         self.channel.start_consuming()

@@ -9,7 +9,7 @@ A publish/subscribe pattern allow a message can be past
  messages directly to the exchange.
 
     * Producer
-    * Exchange
+    * Exchanger
     * Queue
     * Consumer
 
@@ -63,12 +63,12 @@ The producer sends messages to the exchange.
 
 .. code-block:: bash
 
-rangertaha@Coder:~/Projects/messaging-patterns/pubsub$ python producer.py
-0 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
-1 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
-2 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
-3 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
-4 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
+    rangertaha@Coder:~/messaging-patterns/pubsub$ python producer.py
+    0 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
+    1 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
+    2 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
+    3 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
+    4 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
 
 
 
@@ -116,10 +116,10 @@ following command show the types:
 As you can see direct, tipic, headers, fanout amd match are some of the
 types of exchanges.
 
-.. glossary::
 
-    Fanout
-        This exchange broadcasts messages to all the queues.
+.. topic:: Fanout
+
+    This exchange broadcasts messages to all the queues.
 
 
 

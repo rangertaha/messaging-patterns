@@ -86,11 +86,11 @@ A consumer is a user application that receives messages.
             Queue.__init__(self, queue='basic')
 
         def callback(self, ch, method, properties, body):
-            print 'Received: {0}'.format(body)
+            print '{0} received '.format(body)
 
     if __name__ == '__main__':
         p = Consumer()
-        p.receive(p.callback)
+        p.receive()
 
 
 .. code-block:: bash
@@ -134,14 +134,12 @@ A queue is a buffer that stores messages.
             self.queue = queue
 
         def send(self, msg):
-            self.channel.basic_publish(exchange='',
-                          routing_key=self.queue,
-                          body=msg)
+            self.channel.basic_publish(exchange='', routing_key=self.queue,
+                                       body=msg)
 
-        def receive(self, callback):
-            self.channel.basic_consume(callback,
-                          queue=self.queue,
-                          no_ack=True)
+        def receive(self):
+            self.channel.basic_consume(self.callback, queue=self.queue,
+                                       no_ack=True)
             self.channel.start_consuming()
 
 

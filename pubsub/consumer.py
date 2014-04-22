@@ -23,4 +23,4 @@ class Consumer(Exchange):
 
 if __name__ == '__main__':
     p = Consumer()
-    p.receive(p.callback)
+    p.receive()

@@ -19,4 +19,4 @@ class Consumer(Queue):
 
 if __name__ == '__main__':
     p = Consumer()
-    p.receive(p.callback)
+    p.receive()
