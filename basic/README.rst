@@ -8,7 +8,7 @@ and the **Consumer**. The producer sends/produces messages which are sent to
  retrieves/consumes the messages from the queue.
 
 
-.. image:: ../images/basic.png
+.. image:: ./images/basic.png
 
 
 
