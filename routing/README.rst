@@ -3,7 +3,6 @@
 Routing
 =======
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 
 
@@ -25,7 +24,7 @@ ________
 
 The producer sends messages to the exchange.
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
 
 .. code-block:: python
 
@@ -100,7 +99,7 @@ Exchange
 ________
 
 The exchange receives messages from the producer and sends them to queues.
- The exchange makes the discision of how to handle the message. It's
+The exchange makes the discision of how to handle the message. It's
 options are to append to a queue, append to many queues,
 or discarded the message. The desision is based on the exchange types.
 
@@ -133,7 +132,7 @@ exchange as a class.
 Consumers
 ________
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
 
 .. code-block:: python
 
@@ -222,7 +221,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 Queue
 ______
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
+receives messages, stores them and lets the consumer pick them up when ready.
 
 .. code-block:: python
 
