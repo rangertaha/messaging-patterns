@@ -3,9 +3,9 @@
 Example Messaging Patterns
 =========================
 
-Simple messaging patterns using AMQP/RabbitMQ. This is just a walk through
-of a few messaging patterns implemented in python and using RabbitMQ as the
-broker.
+Simple messaging patterns using AMQP/RabbitMQ and Python. This is just a walk
+through of a few messaging patterns implemented in python and using RabbitMQ
+as the broker.
 
 
 
@@ -37,25 +37,20 @@ ______
 .. image:: ./images/worker.png
 
 
+
 Publish/Subscribe
 _________________
 
 .. image:: ./images/pubsub.png
+
+
 
 Routing
 ________
 
 .. image:: ./images/routing.png
 
-Topic
-_____
 
-.. image:: ./images/topic.png
-
-RPC
-_____
-
-.. image:: ./images/rpc.png
 
 
 
@@ -63,3 +58,15 @@ _____
 ToDo
 ----
 
+
+Topic
+_____
+
+.. image:: ./images/topic.png
+
+
+
+Remote Procedure Call (RPC)
+_____
+
+.. image:: ./images/rpc.png
