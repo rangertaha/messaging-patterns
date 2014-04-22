@@ -154,7 +154,11 @@ exchange as a class.
 
 
 
-.. note:: This is a note
+.. note:: This is a Note
+
+.. todo:: This is a TODO
+
+.. seealso:: This is a Also
 
 
 
