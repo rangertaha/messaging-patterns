@@ -117,7 +117,7 @@ As you can see direct, tipic, headers, fanout amd match are some of the
 types of exchanges.
 
 
-.. topic:: Fanout
+.. topic:: **Fanout**
 
     This exchange broadcasts messages to all the queues.
 
