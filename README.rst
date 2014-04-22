@@ -20,9 +20,9 @@ Other
 -----------
 
 .. image:: ./images/pubsub.png
-    :width: 200px
+    :width: 100px
     :align: center
-    :height: 100px
+    :height: 50px
     :alt: ./images/pubsub.png
 
 
