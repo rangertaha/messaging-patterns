@@ -19,7 +19,11 @@ Required
 Other
 -----------
 
-
+.. image:: ./images/pubsub.png
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: ./images/pubsub.png
 
 
 
