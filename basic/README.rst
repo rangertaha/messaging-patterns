@@ -44,6 +44,7 @@ messages to your friend.
     4 2014-04-22 00:19:59.497745 - Basic - Hello World sent
 
 
+Use the **rabbitmqctl** command line admin tool to list the queues.
 
 .. code-block:: bash
 
