@@ -3,24 +3,12 @@
 Remote Procedure Call (RPC)
 =================
 
-Simple queueing patterns by examples
-
-
-Quick start
------------
-
-
-Installation
-____________
-
-    * Install RabbitMQ
-    * 
 
 
 
 
+.. image:: ../images/topics.png
 
-TODO
-____
 
-* Write tests
+
+
