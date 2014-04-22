@@ -3,33 +3,12 @@
 Publish / Subscribe
 =================
 
-.. image:: ../images/pubsub.png
-
-
 
 A publish/subscribe pattern allow a message can be past
 to multiple consumers unlike the worker pattern. The producer sends
 messages directly to the exchange.
 
-    * Producer
-    * Exchange
-    * Queue
-    * Consumer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.. image:: ../images/pubsub.png
 
 
 
@@ -38,9 +17,8 @@ messages directly to the exchange.
 Producer
 ________
 
-The producer sends messages to the exchange.
+The producer sends messages to the exchange. Same as in the basic example
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 .. code-block:: python
 
@@ -53,8 +31,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
             Exchange.__init__(self, exchange='exchange-001', type='fanout')
 
         def send(self, msg):
-            self.channel.basic_publish(exchange=self.exchange, routing_key='',
-                                       body=msg)
+            self.channel.basic_publish(exchange=self.exchange, routing_key='', body=msg)
 
     if __name__ == '__main__':
         NOW = datetime.now()
@@ -96,8 +73,8 @@ Exchange
 ________
 
 The producer never sends messages directly to a queue but rather to the
-exchange. The exchange receives messages from producers sends them to queues
-. The exchange makes the discision of how to handle the message. It's
+exchange. The exchange receives messages from producers sends them to queues.
+The exchange makes the discision of how to handle the message. It's
 options are to append to a queue, append to many queues,
 or discarded the message. The desision is based on the exchange types. The
 following command show the types:
@@ -118,24 +95,9 @@ following command show the types:
     ...done.
     
 
-As you can see direct, tipic, headers, fanout amd match are some of the
-types of exchanges.
 
 
-.. topic:: **Fanout**
-
-    This exchange broadcasts messages to all the queues.
-
-
-
-The following is the snippet for declaring an exchange.
-
-.. code-block:: python
-
-    channel.exchange_declare(exchange='exchange-001',
-                             type='fanout')
-
-With respect to learning and clearifying things. I am representing the
+With respect to learning and clarifying things. I am representing the
 exchange as a class.
 
 .. code-block:: python
@@ -150,12 +112,6 @@ exchange as a class.
             self.channel.exchange_declare(exchange=exchange, type=type)
             self.exchange = exchange
             self.type = type
-
-
-
-
-
-
 
 
 
@@ -246,6 +202,7 @@ Queue
 ______
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
 
 .. code-block:: python
 
