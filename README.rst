@@ -18,9 +18,23 @@ Required
 Other
 -----------
 
+.. image:: ./images/basic.png
+
+
+.. image:: ./images/worker.png
+
+
 .. image:: ./images/pubsub.png
-    :align: center
-    :alt: ./images/pubsub.png
+
+
+.. image:: ./images/routing.png
+
+
+.. image:: ./images/topic.png
+
+
+.. image:: ./images/rpc.png
+
 
 
 

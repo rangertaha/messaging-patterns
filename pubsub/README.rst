@@ -159,7 +159,7 @@ ________
 
 
 
-Here I am running 3 seperate **consumer.py** on different terminals. Notice
+Here I am running 3 separate **consumer.py** on different terminals. Notice
 the numbers at the start of the lines are all unique. Each consumer receives
 a different message from the set of messages the producer sends.
 
