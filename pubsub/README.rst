@@ -5,8 +5,8 @@ Publish / Subscribe
 
 
 A publish/subscribe pattern allow a message can be past
- to multiple consumers unlike the worker pattern. The producer sends
- messages directly to the exchange.
+to multiple consumers unlike the worker pattern. The producer sends
+messages directly to the exchange.
 
     * Producer
     * Exchange
