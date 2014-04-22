@@ -19,6 +19,7 @@ A publish/subscribe pattern allow a message can be past
 
 
 
+
 .. image:: ../images/pubsub.png
 
 
