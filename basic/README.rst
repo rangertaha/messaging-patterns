@@ -1,11 +1,11 @@
-
-
 A Basic Example
 =================
 
-This example has three parts. The Producer, Queue, and the Consumer. The
-producer sends/produces messages and places them in the queue. The queue is
-the RabbitMQ server and the consumer retrieves the message.
+This is the simplest pattern for sending messages I am using RabbitMQ as
+the broker. This example has three parts. The **Producer**, **Queue**,
+and the **Consumer**. The producer sends/produces messages which are sent to
+ the queue. The queue is the RabbitMQ server. The consumer
+ retrieves/consumes the messages from the queue.
 
 
 .. image:: ../images/basic.png
@@ -15,7 +15,8 @@ the RabbitMQ server and the consumer retrieves the message.
 Producer
 ________
 
-A producer is a user application that sends messages.
+A producer is the application that sends the messages. Imagine sending text
+messages to your friend.
 
 .. code-block:: python
 
@@ -74,7 +75,9 @@ A producer is a user application that sends messages.
 Consumer
 ________
 
-A consumer is a user application that receives messages.
+A consumer is the application that receives the messages. Imagine your friend
+who is receiving your text messages.
+
 
 .. code-block:: python
 
@@ -92,6 +95,8 @@ A consumer is a user application that receives messages.
         p = Consumer()
         p.receive()
 
+
+The following is the execution and output of the consumer.py script.
 
 .. code-block:: bash
 
@@ -117,7 +122,13 @@ A consumer is a user application that receives messages.
 Queue
 ______
 
-A queue is a buffer that stores messages.
+
+The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
+receives messages, stores them and lets the consumer pick them up when ready.
+Imagine your friend who you are texting has his phone turned off. The
+messages you send are placed in the Queue until his phone is turned back
+on and receives the messages.
+
 
 .. code-block:: python
 
