@@ -1,5 +1,4 @@
 
-
 Example Messaging Patterns
 =========================
 
@@ -14,7 +13,6 @@ Requirements
 
     * Install `RabbitMQ <https://www.rabbitmq.com/download.html>`_
     * Install `Pika <https://github.com/pika/pika/>`_
-
 
 
 
