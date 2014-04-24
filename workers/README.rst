@@ -1,5 +1,4 @@
 
-
 Worker Queue
 =================
 
@@ -13,7 +12,6 @@ consumers as we want. The messages are evenly distributed among them.
 
 
 .. image:: ../images/worker.png
-
 
 
 
