@@ -1,18 +1,20 @@
 
-
 Example Messaging Patterns
 =========================
 
-These are simple example based tutorials for developing
-basic messaging applications with `RabbitMQ <https://www.rabbitmq.com/download.html>`_.
-RabbitMQ and the `Pika <https://github.com/pika/pika/>`_  Python library
-must be installed to run the code examples
+Simple messaging patterns using AMQP/RabbitMQ and Python. This is just a walk
+through of a few messaging patterns implemented in python and using RabbitMQ
+as the broker.
 
-Installation
+
+
+Requirements
 -----------
 
     * Install `RabbitMQ <https://www.rabbitmq.com/download.html>`_
     * Install `Pika <https://github.com/pika/pika/>`_
+
+
 
 Patterns
 -----------
