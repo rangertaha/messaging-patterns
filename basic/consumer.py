@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 -*-
 """
 A consumer is a user application that receives messages.
 """
@@ -9,7 +8,6 @@ from queue import Queue
 
 class Consumer(Queue):
     """
-
     """
     def __init__(self):
         Queue.__init__(self, queue='basic')

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 -*-
 """
 A producer is a user application that sends messages
 """
