@@ -15,7 +15,6 @@ Installation
     * Install `Pika <https://github.com/pika/pika/>`_
 
 
-
 Patterns
 -----------
 
