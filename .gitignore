@@ -1,0 +1,11 @@
+*.py[co]
+~$
+.swp$
+.db$
+/env
+
+# setuptools stuff
+*.egg-info
+
+# IDE files
+/.idea
