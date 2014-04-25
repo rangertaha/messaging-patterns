@@ -8,8 +8,7 @@ RabbitMQ and the `Pika <https://github.com/pika/pika/>`_  Python library
 must be installed to run the code examples
 
 
-
-Requirements
+Installation
 -----------
 
     * Install `RabbitMQ <https://www.rabbitmq.com/download.html>`_
