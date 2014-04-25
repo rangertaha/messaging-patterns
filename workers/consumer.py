@@ -11,7 +11,7 @@ class Consumer(Queue):
     """
     """
     def __init__(self):
-        Queue.__init__(self, queue='basic')
+        Queue.__init__(self, queue='work')
 
     def callback(self, ch, method, properties, body):
         print '{0} received '.format(body)

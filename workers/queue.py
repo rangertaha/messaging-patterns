@@ -8,7 +8,7 @@ import pika
 
 
 class Queue:
-    def __init__(self, queue='queue', host='localhost', routing='route'):
+    def __init__(self, queue='work', host='localhost', routing='route'):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
         host=host))
         self.channel = self.connection.channel()
