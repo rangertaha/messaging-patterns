@@ -2,7 +2,8 @@
 Routing
 =======
 
-
+This routing pattern uses the exchange type **direct** and a **routing_key**
+. Consumers use this key to accessing the messages from the queue.
 
 
 .. image:: ../images/routing.png
@@ -20,7 +21,9 @@ Routing
 Producer
 ________
 
-The producer sends messages to the exchange.
+The producer sends messages to the exchange. In this example we are using an
+exchange with the **direct** type. This producer also takes an argument wich
+ is assigned as the **routing_key**.
 
 
 
@@ -50,7 +53,9 @@ The producer sends messages to the exchange.
         p.close()
 
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+Bellow you can see I ran the producer with the **blue**, **red**,
+and then **green** as a single argument. This argument is assigned as the
+**routing_key**. Consumers will need this key to retrieve the message.
 
 .. code-block:: bash
 
@@ -101,9 +106,8 @@ The exchange makes the decision of how to handle the message. Its
 options are to append to a queue, append to many queues,
 or discard the message. The decision is based on the exchange types.
 
-
-With respect to learning and clearifying things. I am representing the
-exchange as a class.
+This is an example of the **direct** type. With respect to clarity. I am
+representing the exchange as a class.
 
 .. code-block:: python
 
@@ -119,18 +123,12 @@ exchange as a class.
             self.type = type
 
 
-
-
-
-
-
-
-
-
 Consumers
 ________
 
-
+A consumer is the application that receives the messages. This consumer
+takes one argument which is assigned as the  **routing_key**. It then prints
+all messages with that **routing_key** to the terminal.
 
 .. code-block:: python
 
@@ -155,14 +153,15 @@ ________
 
         def callback(self, ch, method, properties, body):
             print '{0} received '.format(body)
-            #time.sleep(5)
+
 
     if __name__ == '__main__':
         p = Consumer()
         p.receive()
 
 
-
+In these examples the consumer is given an argument which is the
+**routing_key**. It then retrieves the messages that have that **routing_key**.
 
 
 .. code-block:: bash
@@ -178,9 +177,6 @@ ________
     4 2014-04-22 12:08:08.657679 - Routing - blue received
 
 
-
-
-
 .. code-block:: bash
 
     rangertaha@Coder:~/messaging-patterns/pubsub$ tty
@@ -192,8 +188,6 @@ ________
     2 2014-04-22 12:08:12.715046 - Routing - red received
     3 2014-04-22 12:08:12.715046 - Routing - red received
     4 2014-04-22 12:08:12.715046 - Routing - red received
-
-
 
 
 .. code-block:: bash

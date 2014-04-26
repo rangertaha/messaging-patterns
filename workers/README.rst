@@ -98,7 +98,9 @@ Use the **rabbitmqctl** command line admin tool to list the queues.
 Consumers
 ________
 
-A consumer is the application that receives the messages.
+A consumer is the application that receives the messages. This consumer
+receives a message and prints it to the terminal. It then waits 1 second
+before doing it again.
 
 
 .. code-block:: python
