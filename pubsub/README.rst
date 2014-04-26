@@ -1,4 +1,3 @@
-
 Publish / Subscribe
 =================
 
@@ -80,7 +79,7 @@ The producer never sends messages directly to a queue but rather to the
 exchange. The exchange receives messages from producers and sends them to queues.
 The exchange makes the decision on how to handle the message. Its
 options are to append to a queue, append to many queues,
-or discard the message. The desision is based on the exchange types. The
+or discard the message. The decision is based on the exchange types. The
 following commands show the types:
 
 The rules, known as the exchange types are:
