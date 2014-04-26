@@ -1,9 +1,9 @@
 A Basic Example
 =================
 
-This is the simplest pattern for sending messages I am using RabbitMQ as
-the broker. This example has three parts. The **Producer**, **Queue**,
-and the **Consumer**. The producer sends/produces messages which are sent to
+This is the simplest pattern for sending messages. I am using RabbitMQ as
+the broker. This example has three parts, the **Producer**, **Queue**,
+and **Consumer**. The producer sends/produces messages which are sent to
 the queue. The queue is the RabbitMQ server. The consumer
 retrieves/consumes the messages from the queue.
 
@@ -126,9 +126,9 @@ ______
 
 The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
 receives messages, stores them and lets the consumer pick them up when ready.
-Imagine your friend who you are texting has his phone turned off. The
+Imagine texting your friend, who has his phone turned off. The
 messages you send are placed in the Queue until his phone is turned back
-on and receives the messages.
+on and he receives the messages.
 
 
 .. code-block:: python

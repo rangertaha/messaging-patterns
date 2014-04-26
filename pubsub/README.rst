@@ -1,12 +1,10 @@
-
-
 Publish / Subscribe
 =================
 
 
-A publish/subscribe pattern allow a message can be past to multiple
-consumers unlike the worker pattern. The producer sends
-messages directly to the exchange where it follows its rules for
+A publish/subscribe pattern allows a message to be passed to multiple
+consumers, unlike the worker pattern. The producer sends
+messages directly to the exchange, where it follows its rules for
 distributing the messages.
 
 
@@ -78,11 +76,11 @@ Exchange
 ________
 
 The producer never sends messages directly to a queue but rather to the
-exchange. The exchange receives messages from producers sends them to queues.
-The exchange makes the discision of how to handle the message. It's
+exchange. The exchange receives messages from producers and sends them to queues.
+The exchange makes the decision on how to handle the message. Its
 options are to append to a queue, append to many queues,
-or discarded the message. The desision is based on the exchange types. The
-following command show the types:
+or discard the message. The decision is based on the exchange types. The
+following commands show the types:
 
 The rules, known as the exchange types are:
 **direct**, **topic**, **headers** and **fanout**.
@@ -160,7 +158,7 @@ ________
 
 
 Here I am running 3 separate **consumer.py** on different terminals. Notice
-the numbers at the start of the lines are all unique. Each consumer receives
+that the numbers at the start of the lines are all unique. Each consumer receives
 a different message from the set of messages the producer sends.
 
 .. code-block:: bash
@@ -217,8 +215,8 @@ a different message from the set of messages the producer sends.
 Queue
 ______
 
-The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
-receives messages, stores them and lets the consumer pick them up when ready.
+The Queue is the RabbitMQ Server, which uses AMQP to communicate.  This
+receives messages, stores them, and lets the consumer pick them up when ready.
 
 
 .. code-block:: python

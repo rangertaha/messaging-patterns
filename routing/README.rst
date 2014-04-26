@@ -1,5 +1,4 @@
 
-
 Routing
 =======
 
@@ -98,9 +97,9 @@ Exchange
 ________
 
 The exchange receives messages from the producer and sends them to queues.
-The exchange makes the discision of how to handle the message. It's
+The exchange makes the decision of how to handle the message. Its
 options are to append to a queue, append to many queues,
-or discarded the message. The desision is based on the exchange types.
+or discard the message. The decision is based on the exchange types.
 
 
 With respect to learning and clearifying things. I am representing the
@@ -221,7 +220,7 @@ Queue
 ______
 
 The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
-receives messages, stores them and lets the consumer pick them up when ready.
+receives messages, stores them, and lets the consumer pick them up when ready.
 
 .. code-block:: python
 
