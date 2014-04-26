@@ -1,13 +1,12 @@
-
 Worker Queue
 =================
 
 This is an example of a work queue. This type of queue is used to
-distribute messages to multiple workers. This is the second simplest pattern for sending messages. The fist being the
+distribute messages to multiple workers. It is the second simplest pattern for sending messages, the fist being the
 basic. This example also has three parts.  The **Producer**, **Queue**,
 and the **Consumers**. The producer sends/produces messages which are sent to
 the queue. The queue is the RabbitMQ server. The consumers
-retrieves/consumes the messages from the queue. We can have as many
+retrieve/consume the messages from the queue. We can have as many
 consumers as we want. The messages are evenly distributed among them.
 
 
@@ -121,7 +120,7 @@ A consumer is the application that receives the messages.
         p.receive(p.callback)
 
 
-Here I am running 3 seperate **consumer.py** on different terminals. Notice
+Here I am running 3 separate **consumer.py** on different terminals. Notice
 the numbers at the start of the lines are all unique. Each consumer receives
 a different message from the set of messages the producer sends.
 
@@ -168,8 +167,8 @@ Queue
 ______
 
 The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
-receives messages, stores them and lets the consumer pick them up when ready.
-Imagine your friend who you are texting has his phone turned off. The
+receives messages, stores them, and lets the consumer pick them up when ready.
+Imagine texting your friend, who has his phone turned off. The
 messages you send are placed in the Queue until his phone is turned back
 on and receives the messages.
 
