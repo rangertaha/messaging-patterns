@@ -9,15 +9,6 @@ This routing pattern uses the exchange type **direct** and a **routing_key**
 .. image:: ../images/routing.png
 
 
-
-
-
-
-
-
-
-
-
 Producer
 ________
 
@@ -90,12 +81,6 @@ and then **green** as a single argument. This argument is assigned as the
         exchange	queue	queue	queue	[]
     exchange-001	exchange	amq.gen-BXvvwbg12wVC3XJsPQPz9A	queue	amq.gen-BXvvwbg12wVC3XJsPQPz9A	[]
     ...done.
-
-
-
-
-
-
 
 
 Exchange
@@ -201,13 +186,6 @@ In these examples the consumer is given an argument which is the
     2 2014-04-22 12:08:19.934197 - Routing - green received
     3 2014-04-22 12:08:19.934197 - Routing - green received
     4 2014-04-22 12:08:19.934197 - Routing - green received
-
-
-
-
-
-
-
 
 
 Queue

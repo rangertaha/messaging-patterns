@@ -124,7 +124,8 @@ before doing it again.
 
 Here I am running 3 separate **consumer.py** on different terminals. Notice
 the numbers at the start of the lines are all unique. Each consumer receives
-a different message from the set of messages the producer sends.
+a different message from the set of messages the producer sends. They each
+process one message and wait one second then repeat the process.
 
 .. code-block:: bash
 
