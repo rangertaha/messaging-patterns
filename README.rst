@@ -1,6 +1,5 @@
-
 Example Messaging Patterns
-=========================
+==========================
 
 These are simple example based tutorials for developing
 basic messaging applications with `RabbitMQ <https://www.rabbitmq.com/download.html>`_.
@@ -9,17 +8,17 @@ must be installed to run the code examples
 
 
 Installation
------------
+------------
 
     * Install `RabbitMQ <https://www.rabbitmq.com/download.html>`_
     * Install `Pika <https://github.com/pika/pika/>`_
 
 
 Patterns
------------
+--------
 
 Basic
-______
+_____
 
 This is the simplest pattern for sending messages. I am using RabbitMQ as
 the broker. This example has three parts, the **Producer**, **Queue**,
