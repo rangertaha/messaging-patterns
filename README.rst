@@ -24,7 +24,7 @@ the queue. The queue is the RabbitMQ server. The consumer
 retrieves/consumes the messages from the queue.
 
 
-.. image:: ../images/basic.png
+.. image:: ./images/basic.png
 
 
 
@@ -162,7 +162,7 @@ retrieve/consume the messages from the queue. We can have as many
 consumers as we want. The messages are evenly distributed among them.
 
 
-.. image:: ../images/worker.png
+.. image:: ./images/worker.png
 
 
 
@@ -367,7 +367,7 @@ distributing the messages.
 
 
 
-.. image:: ../images/pubsub.png
+.. image:: ./images/pubsub.png
 
 
 
@@ -613,7 +613,7 @@ This routing pattern uses the exchange type **direct** and a **routing_key**
 . Consumers use this key to accessing the messages from the queue.
 
 
-.. image:: ../images/routing.png
+.. image:: ./images/routing.png
 
 
 Producer
