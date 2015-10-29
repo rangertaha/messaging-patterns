@@ -834,15 +834,12 @@ receives messages, stores them, and lets the consumer pick them up when ready.
 ToDo
 ----
 
+* Topics
+* Remote Procedure Call (RPC)
 
-Topic
-_____
+
+
+Topics
+______
 
 .. image:: ./images/topic.png
-
-
-
-Remote Procedure Call (RPC)
-_____
-
-.. image:: ./images/rpc.png
