@@ -14,11 +14,8 @@ Installation
     * Install `Pika <https://github.com/pika/pika/>`_
 
 
-Patterns
---------
-
-Basic
-_____
+Basic Patterns
+--------------
 
 This is the simplest pattern for sending messages. I am using RabbitMQ as
 the broker. This example has three parts, the **Producer**, **Queue**,
@@ -76,22 +73,6 @@ Use the **rabbitmqctl** command line admin tool to list the queues.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Consumer
 ________
 
@@ -131,16 +112,8 @@ The following is the execution and output of the consumer.py script.
 
 
 
-
-
-
-
-
-
-
-
 Queue
-______
+_____
 
 
 The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
@@ -178,7 +151,7 @@ on and he receives the messages.
 
 
 Worker
-______
+------
 
 This is an example of a work queue. This type of queue is used to
 distribute messages to multiple workers. It is the second simplest pattern for sending messages, the fist being the
@@ -275,7 +248,7 @@ Use the **rabbitmqctl** command line admin tool to list the queues.
 
 
 Consumers
-________
+_________
 
 A consumer is the application that receives the messages. This consumer
 receives a message and prints it to the terminal. It then waits 1 second
@@ -384,11 +357,7 @@ on and receives the messages.
 
 
 Publish/Subscribe
-_________________
-
-Publish / Subscribe
-=================
-
+-----------------
 
 A publish/subscribe pattern allows a message to be passed to multiple
 consumers, unlike the worker pattern. The producer sends
@@ -511,7 +480,7 @@ exchange as a class.
 
 
 Consumers
-________
+_________
 
 
 
@@ -601,7 +570,7 @@ a different message from the set of messages the producer sends.
 
 
 Queue
-______
+_____
 
 The Queue is the RabbitMQ Server, which uses AMQP to communicate.  This
 receives messages, stores them, and lets the consumer pick them up when ready.
@@ -636,7 +605,7 @@ receives messages, stores them, and lets the consumer pick them up when ready.
 
 
 Routing
-________
+-------
 
 
 
@@ -747,7 +716,7 @@ representing the exchange as a class.
 
 
 Consumers
-________
+_________
 
 A consumer is the application that receives the messages. This consumer
 takes one argument which is assigned as the  **routing_key**. It then prints
@@ -827,7 +796,7 @@ In these examples the consumer is given an argument which is the
 
 
 Queue
-______
+_____
 
 The Queue is the RabbitMQ Server which uses AMQP to communicate.  This
 receives messages, stores them, and lets the consumer pick them up when ready.

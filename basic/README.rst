@@ -1,5 +1,5 @@
 A Basic Example
-=================
+===============
 
 This is the simplest pattern for sending messages. I am using RabbitMQ as
 the broker. This example has three parts, the **Producer**, **Queue**,
