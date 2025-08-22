@@ -301,7 +301,7 @@ ______
 The Queue in this setup is the RabbitMQ server, which communicates using the AMQP protocol. It receives and stores messages, allowing the consumer to retrieve them when ready. Imagine it like sending a text to a friend whose phone is off—the messages you send are held in the Queue until your friend turns their phone back on to receive them.
 
 .. code-block:: python
-
+    
     #!/usr/bin/env python
     import pika
 
