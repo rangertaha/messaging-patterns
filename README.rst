@@ -1,14 +1,38 @@
 Example Messaging Patterns
 ==========================
 
-Here are some straightforward, example-based tutorials for building basic messaging applications using [RabbitMQ](https://www.rabbitmq.com/download.html). To run the code examples, make sure both RabbitMQ and the [Pika](https://github.com/pika/pika/) Python library are installed.
+A comprehensive guide to building messaging applications using RabbitMQ and Python. This repository provides practical, example-based tutorials for common messaging patterns.
+
+.. contents:: Table of Contents
+   :local:
+
+Installation
+------------
+
+Prerequisites:
+
+* Python 3.7+
+* RabbitMQ Server
+
+Install dependencies:
+
+.. code-block:: bash
+
+    pip install pika
+
+Quick Start
+-----------
+
+1. Start RabbitMQ server
+2. Run examples from any pattern directory
+3. Each pattern includes producer and consumer scripts
 
 
 Installation
 ------------
 
-    * Install `RabbitMQ <https://www.rabbitmq.com/download.html>`_
-    * Install `Pika <https://github.com/pika/pika/>`_
+* Install `RabbitMQ <https://www.rabbitmq.com/download.html>`_
+* Install `Pika <https://github.com/pika/pika/>`_
 
 
 Basic Patterns
@@ -29,7 +53,7 @@ messages to your friend.
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     from queue import Queue
 
     class Producer(Queue):
@@ -45,7 +69,7 @@ messages to your friend.
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/basic$ python producer.py
+    messaging-patterns/basic$ python producer.py
     0 2014-04-22 00:19:59.497745 - Basic - Hello World sent
     1 2014-04-22 00:19:59.497745 - Basic - Hello World sent
     2 2014-04-22 00:19:59.497745 - Basic - Hello World sent
@@ -57,7 +81,7 @@ Use the **rabbitmqctl** command line admin tool to list the queues.
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/basic$ sudo rabbitmqctl list_queues
+    ~/messaging-patterns/basic$ sudo rabbitmqctl list_queues
     Listing queues ...
     basic	5
     ...done.
@@ -83,7 +107,7 @@ who is receiving your text messages.
             Queue.__init__(self, queue='basic')
 
         def callback(self, ch, method, properties, body):
-            print '{0} received '.format(body)
+            print(f'{body} received')
 
     if __name__ == '__main__':
         p = Consumer()
@@ -94,7 +118,7 @@ The following is the execution and output of the consumer.py script.
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/basic$ python consumer.py
+    ~/messaging-patterns/basic$ python consumer.py
     0 2014-04-22 00:19:59.497745 - Basic - Hello World received
     1 2014-04-22 00:19:59.497745 - Basic - Hello World received
     2 2014-04-22 00:19:59.497745 - Basic - Hello World received
@@ -164,7 +188,7 @@ This producer functions just like in the previous basic example. It’s the appl
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     from datetime import datetime
     from queue import Queue
 
@@ -176,8 +200,8 @@ This producer functions just like in the previous basic example. It’s the appl
         NOW = datetime.now()
         p = Producer()
         for i in range(15):
-            p.send('{0} {1} - Basic - Hello World'.format(i, NOW))
-            print '{0} {1} - Basic - Hello World sent'.format(i, NOW)
+            p.send(f'{i} {NOW} - Basic - Hello World')
+            print(f'{i} {NOW} - Basic - Hello World sent')
         p.close()
 
 
@@ -199,7 +223,7 @@ This producer functions just like in the previous basic example. It’s the appl
     12 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     13 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     14 2014-04-22 00:10:16.946810 - Basic - Hello World sent
-    rangertaha@Coder:~/messaging-patterns/workers$
+
 
 
 
@@ -208,7 +232,7 @@ Use the **rabbitmqctl** command line admin tool to list the queues.
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/workers$ sudo rabbitmqctl list_queues
+    ~/messaging-patterns/workers$ sudo rabbitmqctl list_queues
     Listing queues ...
     basic	15
     ...done.
@@ -237,7 +261,7 @@ A consumer is the application that receives messages. This consumer retrieves a 
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import time
     from queue import Queue
 
@@ -246,7 +270,7 @@ A consumer is the application that receives messages. This consumer retrieves a 
             Queue.__init__(self, queue='basic')
 
         def callback(self, ch, method, properties, body):
-            print 'Received: {0}'.format(body)
+            print(f'Received: {body}')
             time.sleep(1)
 
     if __name__ == '__main__':
@@ -258,7 +282,7 @@ Here, I'm running three separate instances of **consumer.py** in different termi
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/workers$ python consumer.py
+    ~/messaging-patterns/workers$ python consumer.py
     0 2014-04-22 00:10:16.946810 - Basic - Hello World received
     3 2014-04-22 00:10:16.946810 - Basic - Hello World received
     6 2014-04-22 00:10:16.946810 - Basic - Hello World received
@@ -269,7 +293,7 @@ Here, I'm running three separate instances of **consumer.py** in different termi
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/workers$ python consumer.py
+    ~/messaging-patterns/workers$ python consumer.py
     1 2014-04-22 00:10:16.946810 - Basic - Hello World received
     4 2014-04-22 00:10:16.946810 - Basic - Hello World received
     7 2014-04-22 00:10:16.946810 - Basic - Hello World received
@@ -280,7 +304,7 @@ Here, I'm running three separate instances of **consumer.py** in different termi
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/workers$ python consumer.py
+    ~/messaging-patterns/workers$ python consumer.py
     2 2014-04-22 00:10:16.946810 - Basic - Hello World received
     5 2014-04-22 00:10:16.946810 - Basic - Hello World received
     8 2014-04-22 00:10:16.946810 - Basic - Hello World received
@@ -302,7 +326,7 @@ The Queue in this setup is the RabbitMQ server, which communicates using the AMQ
 
 .. code-block:: python
     
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import pika
 
     class Queue:
@@ -331,6 +355,7 @@ The Queue in this setup is the RabbitMQ server, which communicates using the AMQ
 
 Publish/Subscribe
 -----------------
+
 The publish/subscribe pattern enables a message to be delivered to multiple consumers, unlike the worker pattern. Here, the producer sends messages directly to an exchange, which then applies its rules to distribute the messages to multiple consumers.
 
 
@@ -350,7 +375,7 @@ The producer sends messages to the exchange. Same as in the basic example
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     from datetime import datetime
     from exchange import Exchange
 
@@ -365,15 +390,15 @@ The producer sends messages to the exchange. Same as in the basic example
         NOW = datetime.now()
         p = Producer()
         for i in range(5):
-            p.send('{0} {1} - Pub/Sub - Hello World'.format(i, NOW))
-            print '{0} {1} - Pub/Sub - Hello World sent'.format(i, NOW)
+            p.send(f'{i} {NOW} - Pub/Sub - Hello World')
+            print(f'{i} {NOW} - Pub/Sub - Hello World sent')
         p.close()
 
 
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ python producer.py
+    ~/messaging-patterns/pubsub$ python producer.py
     0 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
     1 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
     2 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World sent
@@ -385,7 +410,7 @@ Use the **rabbitmqctl** command line admin tool to list the queues.
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ sudo rabbitmqctl list_queues
+    ~/messaging-patterns/pubsub$ sudo rabbitmqctl list_queues
     Listing queues ...
     basic	15
     ...done.
@@ -401,7 +426,7 @@ Use the **rabbitmqctl** command line admin tool to list the queues.
 Exchange
 ________
 
-The producer doesn’t send messages directly to a queue; instead, it sends them to an exchange. The exchange receives messages from producers and decides how to route them—either by delivering them to one or more queues or by discarding them. This routing behavior depends on the type of exchange. Here are the available exchange types:
+The producer doesn't send messages directly to a queue; instead, it sends them to an exchange. The exchange receives messages from producers and decides how to route them—either by delivering them to one or more queues or by discarding them. This routing behavior depends on the type of exchange. Here are the available exchange types:
 
 The rules, known as the exchange types are:
 **direct**, **topic**, **headers** and **fanout**.
@@ -409,7 +434,7 @@ The rules, known as the exchange types are:
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ sudo rabbitmqctl list_exchanges
+    ~/messaging-patterns/pubsub$ sudo rabbitmqctl list_exchanges
     Listing exchanges ...
         direct
     amq.direct	direct
@@ -427,7 +452,7 @@ In terms of learning and clarification, I am representing the exchange as a clas
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import pika
     from queue import Queue
 
@@ -448,7 +473,7 @@ _________
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import time
     from exchange import Exchange
 
@@ -464,7 +489,7 @@ _________
             self.queue = result.method.queue
 
         def callback(self, ch, method, properties, body):
-            print '{0} received '.format(body)
+            print(f'{body} received')
             #time.sleep(5)
 
     if __name__ == '__main__':
@@ -480,10 +505,10 @@ Here, I'm running three separate instances of **consumer.py** in different termi
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ tty
+    ~/messaging-patterns/pubsub$ tty
     /dev/pts/7
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ python consumer.py
+    ~/messaging-patterns/pubsub$ python consumer.py
     0 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
     1 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
     2 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
@@ -495,10 +520,10 @@ Here, I'm running three separate instances of **consumer.py** in different termi
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ tty
+    ~/messaging-patterns/pubsub$ tty
     /dev/pts/4
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ python consumer.py
+    ~/messaging-patterns/pubsub$ python consumer.py
     0 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
     1 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
     2 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
@@ -510,10 +535,10 @@ Here, I'm running three separate instances of **consumer.py** in different termi
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ tty
+    ~/messaging-patterns/pubsub$ tty
     /dev/pts/9
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ python consumer.py
+    ~/messaging-patterns/pubsub$ python consumer.py
     0 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
     1 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
     2 2014-04-22 09:39:16.483488 - Pub/Sub - Hello World received
@@ -537,7 +562,7 @@ The Queue is the RabbitMQ server, which uses AMQP for communication. It receives
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import pika
 
     class Queue:
@@ -567,7 +592,6 @@ Routing
 -------
 
 
-
 This routing pattern uses the **direct** exchange type along with a **routing_key**. Consumers use this key to access the messages from the queue.
 
 
@@ -576,13 +600,14 @@ This routing pattern uses the **direct** exchange type along with a **routing_ke
 
 Producer
 ________
+
 The producer sends messages to the exchange, which in this case is of the **direct** type. The producer also accepts an argument that is used as the **routing_key**.
 
 
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import sys
     from datetime import datetime
     from exchange import Exchange
@@ -601,27 +626,34 @@ The producer sends messages to the exchange, which in this case is of the **dire
         NOW = datetime.now()
         p = Producer()
         for i in range(5):
-            p.send('{0} {1} - Routing - {2}'.format(i, NOW, p.routing))
-            print '{0} {1} - Routing - {2} sent'.format(i, NOW, p.routing)
+            p.send(f'{i} {NOW} - Routing - {p.routing}')
+            print(f'{i} {NOW} - Routing - {p.routing} sent')
         p.close()
 
 
 Below, you can see that I ran the producer with **blue**, **red**, and then **green** as a single argument. This argument is used as the **routing_key**, which consumers will need to retrieve the corresponding message.
+
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/routing$ python producer.py blue
+    ~/messaging-patterns/routing$ python producer.py blue
     0 2014-04-22 12:08:08.657679 - Routing - blue sent
     1 2014-04-22 12:08:08.657679 - Routing - blue sent
     2 2014-04-22 12:08:08.657679 - Routing - blue sent
     3 2014-04-22 12:08:08.657679 - Routing - blue sent
     4 2014-04-22 12:08:08.657679 - Routing - blue sent
-    rangertaha@Coder:~/messaging-patterns/routing$ python producer.py red
+
+.. code-block:: bash
+
+    ~/messaging-patterns/routing$ python producer.py red
     0 2014-04-22 12:08:12.715046 - Routing - red sent
     1 2014-04-22 12:08:12.715046 - Routing - red sent
     2 2014-04-22 12:08:12.715046 - Routing - red sent
     3 2014-04-22 12:08:12.715046 - Routing - red sent
     4 2014-04-22 12:08:12.715046 - Routing - red sent
-    rangertaha@Coder:~/messaging-patterns/routing$ python producer.py green
+
+.. code-block:: bash
+
+    ~/messaging-patterns/routing$ python producer.py green
     0 2014-04-22 12:08:19.934197 - Routing - green sent
     1 2014-04-22 12:08:19.934197 - Routing - green sent
     2 2014-04-22 12:08:19.934197 - Routing - green sent
@@ -633,7 +665,7 @@ Below, you can see that I ran the producer with **blue**, **red**, and then **gr
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/Projects/messaging-patterns/pubsub$ sudo rabbitmqctl list_bindings
+    ~/messaging-patterns/pubsub$ sudo rabbitmqctl list_bindings
     Listing bindings ...
         exchange	amq.gen-BXvvwbg12wVC3XJsPQPz9A	queue	amq.gen-BXvvwbg12wVC3XJsPQPz9A	[]
         exchange	basic	queue	basic	[]
@@ -644,13 +676,14 @@ Below, you can see that I ran the producer with **blue**, **red**, and then **gr
 
 Exchange
 ________
+
 The exchange receives messages from the producer and routes them to queues. It determines how to handle each message, with options to send it to a single queue, multiple queues, or discard it entirely. The routing decision depends on the type of exchange.
 
 This example uses the **direct** exchange type. For clarity, I am representing the exchange as a class.
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import pika
     from queue import Queue
 
@@ -669,7 +702,7 @@ A consumer is the application that receives messages. This consumer accepts one 
 
 .. code-block:: python
 
-    #!/usr/bin/env python
+    #!/usr/bin/env python3
     import sys
     import time
     from exchange import Exchange
@@ -689,7 +722,7 @@ A consumer is the application that receives messages. This consumer accepts one 
 
 
         def callback(self, ch, method, properties, body):
-            print '{0} received '.format(body)
+            print(f'{body} received')
 
 
     if __name__ == '__main__':
@@ -701,10 +734,12 @@ In these examples, the consumer is provided with an argument that serves as the 
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ tty
+    ~/messaging-patterns/pubsub$ tty
     /dev/pts/3
 
-    rangertaha@Coder:~/messaging-patterns/routing$ python consumer.py blue
+.. code-block:: bash
+
+    ~/messaging-patterns/routing$ python consumer.py blue
     0 2014-04-22 12:08:08.657679 - Routing - blue received
     1 2014-04-22 12:08:08.657679 - Routing - blue received
     2 2014-04-22 12:08:08.657679 - Routing - blue received
@@ -714,10 +749,12 @@ In these examples, the consumer is provided with an argument that serves as the 
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ tty
+    ~/messaging-patterns/pubsub$ tty
     /dev/pts/4
 
-    rangertaha@Coder:~/messaging-patterns/routing$ python consumer.py red
+.. code-block:: bash
+
+    ~/messaging-patterns/routing$ python consumer.py red
     0 2014-04-22 12:08:12.715046 - Routing - red received
     1 2014-04-22 12:08:12.715046 - Routing - red received
     2 2014-04-22 12:08:12.715046 - Routing - red received
@@ -727,10 +764,12 @@ In these examples, the consumer is provided with an argument that serves as the 
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/pubsub$ tty
+    ~/messaging-patterns/pubsub$ tty
     /dev/pts/5
 
-    rangertaha@Coder:~/messaging-patterns/routing$ python consumer.py green
+.. code-block:: bash
+
+    ~/messaging-patterns/routing$ python consumer.py green
     0 2014-04-22 12:08:19.934197 - Routing - green received
     1 2014-04-22 12:08:19.934197 - Routing - green received
     2 2014-04-22 12:08:19.934197 - Routing - green received
@@ -742,6 +781,7 @@ Queue
 _____
 
 The Queue is the RabbitMQ server, which communicates using AMQP. It receives and stores messages, allowing the consumer to retrieve them when ready.
+
 .. code-block:: python
 
     #!/usr/bin/env python
@@ -772,15 +812,108 @@ The Queue is the RabbitMQ server, which communicates using AMQP. It receives and
 
 
 
-ToDo
-----
-
-* Topics
-* Remote Procedure Call (RPC)
-
 
 
 Topics
 ______
 
 .. image:: ./images/topic.png
+
+Advanced Patterns
+----------------
+
+RPC (Remote Procedure Call)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The RPC pattern allows one application to call a function on another application running on a different machine.
+
+.. code-block:: python
+
+    #!/usr/bin/env python3
+    import pika
+    import uuid
+
+    class FibonacciRpcClient:
+        def __init__(self):
+            self.connection = pika.BlockingConnection(
+                pika.ConnectionParameters(host='localhost'))
+            self.channel = self.connection.channel()
+            result = self.channel.queue_declare(exclusive=True)
+            self.callback_queue = result.method.queue
+            self.channel.basic_consume(
+                queue=self.callback_queue,
+                on_message_callback=self.on_response,
+                auto_ack=True)
+
+        def on_response(self, ch, method, props, body):
+            if self.corr_id == props.correlation_id:
+                self.response = body
+
+        def call(self, n):
+            self.response = None
+            self.corr_id = str(uuid.uuid4())
+            self.channel.basic_publish(
+                exchange='',
+                routing_key='rpc_queue',
+                properties=pika.BasicProperties(
+                    reply_to=self.callback_queue,
+                    correlation_id=self.corr_id,
+                ),
+                body=str(n))
+            while self.response is None:
+                self.connection.process_data_events()
+            return int(self.response)
+
+    if __name__ == '__main__':
+        fibonacci_rpc = FibonacciRpcClient()
+        print(" [x] Requesting fib(30)")
+        response = fibonacci_rpc.call(30)
+        print(f" [.] Got {response}")
+
+Best Practices
+-------------
+
+1. **Error Handling**: Always implement proper error handling for connection failures
+2. **Connection Management**: Use connection pooling for production applications
+3. **Message Acknowledgment**: Implement proper message acknowledgment for reliable delivery
+4. **Queue Durability**: Use durable queues for important messages
+5. **Exchange Types**: Choose the right exchange type for your use case
+
+Troubleshooting
+--------------
+
+Common Issues:
+
+1. **Connection Refused**: Ensure RabbitMQ server is running
+2. **Queue Not Found**: Declare queues before using them
+3. **Permission Denied**: Check RabbitMQ user permissions
+4. **Memory Issues**: Monitor RabbitMQ memory usage
+
+Useful Commands:
+
+.. code-block:: bash
+
+    # Start RabbitMQ
+    sudo systemctl start rabbitmq-server
+    
+    # Check status
+    sudo systemctl status rabbitmq-server
+    
+    # List queues
+    sudo rabbitmqctl list_queues
+    
+    # List exchanges
+    sudo rabbitmqctl list_exchanges
+    
+    # List bindings
+    sudo rabbitmqctl list_bindings
+
+Contributing
+-----------
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+License
+-------
+
+This project is licensed under the MIT License - see the LICENSE file for details.
