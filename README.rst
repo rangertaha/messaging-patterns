@@ -183,7 +183,7 @@ This producer functions just like in the previous basic example. It’s the appl
 
 .. code-block:: bash
 
-    rangertaha@Coder:~/messaging-patterns/workers$ python producer.py
+    ~/messaging-patterns/workers$ python producer.py
     0 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     1 2014-04-22 00:10:16.946810 - Basic - Hello World sent
     2 2014-04-22 00:10:16.946810 - Basic - Hello World sent
