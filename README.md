@@ -868,3 +868,280 @@ rangertaha@coder:~/messaging-patterns/rpc$ python client.py 30
 fib(30) requested
 fib(30) = 832040 received
 ```
+
+# Brokerless Patterns: ZeroMQ and nanomsg
+
+All of the patterns above rely on a **broker**—the RabbitMQ server sits in the
+middle, storing and routing every message. [ZeroMQ](https://zeromq.org/) and
+[nanomsg](https://nanomsg.org/) (and its successor
+[NNG](https://nng.nanomsg.org/)) take the opposite approach: they are
+**brokerless** messaging libraries. There is no server to install; peers
+connect directly to each other, and the messaging pattern is built into the
+**socket type** itself. nanomsg calls these patterns *scalability protocols*.
+
+The trade-off: without a broker there is no central persistence—if nobody is
+connected, messages are dropped or queued only in the sender's memory. In
+exchange you get far lower latency, no single point of failure, and no
+infrastructure to operate.
+
+How the patterns map to what we built with RabbitMQ:
+
+| RabbitMQ pattern (above)  | ZeroMQ sockets        | nanomsg protocol        |
+|---------------------------|-----------------------|-------------------------|
+| Basic queue               | PUSH → PULL           | PIPELINE                |
+| Worker queue              | PUSH → PULL (fan-out) | PIPELINE                |
+| Publish/Subscribe         | PUB → SUB             | PUBSUB                  |
+| Routing / Topics          | PUB → SUB (prefix)    | PUBSUB (prefix)         |
+| RPC                       | REQ ↔ REP             | REQREP                  |
+| — (no equivalent)         | PAIR                  | PAIR                    |
+| — (no equivalent)         | ROUTER / DEALER       | —                       |
+| — (no equivalent)         | —                     | BUS                     |
+| — (no equivalent)         | —                     | SURVEY                  |
+
+The Python snippets below use [pyzmq](https://pyzmq.readthedocs.io/) for the
+ZeroMQ patterns and [pynng](https://pynng.readthedocs.io/) for the
+nanomsg-only patterns (`pip install pyzmq pynng`).
+
+## Pair (PAIR)
+
+The simplest pattern: an exclusive one-to-one channel between exactly two
+peers. There is no routing and no fan-out—whatever one side sends, the other
+receives. Useful for connecting two threads or two processes that need a
+bidirectional pipe with message boundaries.
+
+```mermaid
+flowchart LR
+    A([Peer A]) <-->|PAIR| B([Peer B])
+```
+
+```python
+import zmq
+
+ctx = zmq.Context()
+
+# peer A                                # peer B
+a = ctx.socket(zmq.PAIR)                # b = ctx.socket(zmq.PAIR)
+a.bind('tcp://*:5555')                  # b.connect('tcp://localhost:5555')
+a.send(b'ping')                         # print(b.recv())  # b'ping'
+print(a.recv())  # b'pong'              # b.send(b'pong')
+```
+
+## Request/Reply (REQ/REP)
+
+The brokerless equivalent of the RPC pattern. A **REQ** socket sends a request
+and blocks until the reply arrives; a **REP** socket receives a request and
+must answer it before it can receive the next one. The sockets enforce this
+strict send→receive→send lockstep—breaking it raises an error. A REQ socket
+connected to several REP servers round-robins its requests between them.
+
+```mermaid
+sequenceDiagram
+    participant C as Client (REQ)
+    participant S as Server (REP)
+    C->>S: fib(30)
+    S->>C: 832040
+    C->>S: fib(31)
+    S->>C: 1346269
+```
+
+```python
+import zmq
+
+ctx = zmq.Context()
+
+# server                                # client
+rep = ctx.socket(zmq.REP)               # req = ctx.socket(zmq.REQ)
+rep.bind('tcp://*:5555')                # req.connect('tcp://localhost:5555')
+while True:                             # req.send(b'30')
+    n = int(rep.recv())                 # print(req.recv())  # b'832040'
+    rep.send(str(fib(n)).encode())
+```
+
+## Extended Request/Reply (ROUTER/DEALER)
+
+REQ/REP's lockstep is too rigid for real services: a client can't pipeline
+requests and a server can't answer out of order. **DEALER** and **ROUTER** are
+the asynchronous versions. A ROUTER socket prepends an identity frame to every
+message it receives, so it knows which peer to route each reply back to; a
+DEALER fair-queues outgoing messages across its connections.
+
+The classic use is a small broker connecting N clients to M workers—ZeroMQ's
+answer to the worker-queue pattern, with the broker being ~10 lines of your
+own code instead of a server product:
+
+```mermaid
+flowchart LR
+    C1([Client REQ]) --> R{{ROUTER}}
+    C2([Client REQ]) --> R
+    C3([Client REQ]) --> R
+    R --- B[broker]
+    B --- D{{DEALER}}
+    D --> W1([Worker REP])
+    D --> W2([Worker REP])
+    D --> W3([Worker REP])
+```
+
+```python
+import zmq
+
+ctx = zmq.Context()
+frontend = ctx.socket(zmq.ROUTER)
+backend = ctx.socket(zmq.DEALER)
+frontend.bind('tcp://*:5559')    # clients connect here
+backend.bind('tcp://*:5560')     # workers connect here
+zmq.proxy(frontend, backend)     # shuttle messages both ways forever
+```
+
+Clients and workers are unchanged REQ/REP programs—they just connect to the
+broker instead of each other, and the pool can scale on either side.
+
+## Publish/Subscribe (PUB/SUB)
+
+Same idea as the RabbitMQ fanout/topic exchanges, without the exchange. A
+**PUB** socket broadcasts every message to all connected **SUB** sockets, and
+each subscriber filters by **topic prefix**—subscribing to `kern.` delivers
+`kern.critical` and `kern.info` alike, so you get routing and topics in one
+pattern. Filtering happens at the publisher side in modern ZeroMQ, so
+unwanted messages never cross the wire.
+
+Two things to know: a subscriber receives nothing until it sets at least one
+subscription (`''` subscribes to everything), and a **slow joiner** misses
+messages published before its connection finished—there is no queue holding
+messages for absent consumers, unlike RabbitMQ.
+
+```mermaid
+flowchart LR
+    P([Publisher PUB]) -->|kern.critical| S1(["Subscriber SUB 'kern.'"])
+    P -->|kern.critical| S2(["Subscriber SUB ''"])
+    P -.->|filtered out| S3(["Subscriber SUB 'app.'"])
+```
+
+```python
+import zmq
+
+ctx = zmq.Context()
+
+# publisher                             # subscriber
+pub = ctx.socket(zmq.PUB)               # sub = ctx.socket(zmq.SUB)
+pub.bind('tcp://*:5556')                # sub.connect('tcp://localhost:5556')
+                                        # sub.setsockopt(zmq.SUBSCRIBE, b'kern.')
+pub.send(b'kern.critical disk failed')  # print(sub.recv())
+pub.send(b'app.info user logged in')    # only the kern.* message arrives
+```
+
+To scale beyond one publisher, ZeroMQ adds **XPUB/XSUB**: raw versions of
+PUB/SUB that expose subscription messages, letting you build a forwarding
+proxy so many publishers reach many subscribers through one well-known
+address—a broker-shaped topology, but still just your own process running
+`zmq.proxy(xsub, xpub)`.
+
+## Pipeline (PUSH/PULL)
+
+The brokerless work queue. A **PUSH** socket load-balances messages
+round-robin across all connected **PULL** sockets; each message goes to
+exactly one worker. Pipelines are one-directional and are usually chained
+into a *ventilator → workers → sink* topology: one process fans work out, a
+pool of workers processes it in parallel, and a sink collects the results.
+
+```mermaid
+flowchart LR
+    V([Ventilator PUSH]) --> W1([Worker PULL/PUSH])
+    V --> W2([Worker PULL/PUSH])
+    V --> W3([Worker PULL/PUSH])
+    W1 --> S([Sink PULL])
+    W2 --> S
+    W3 --> S
+```
+
+```python
+import zmq
+
+ctx = zmq.Context()
+
+# ventilator          # worker                          # sink
+push = ctx.socket(    # pull = ctx.socket(zmq.PULL)     # res = ctx.socket(zmq.PULL)
+    zmq.PUSH)         # pull.connect('tcp://...:5557')  # res.bind('tcp://*:5558')
+push.bind(            # out = ctx.socket(zmq.PUSH)      # print(res.recv())
+    'tcp://*:5557')   # out.connect('tcp://...:5558')
+push.send(b'task 1')  # out.send(work(pull.recv()))
+```
+
+Unlike the RabbitMQ worker queue there are no acknowledgements: if a worker
+dies mid-task, its message is lost. Durability is what the broker was buying
+you.
+
+## Bus (BUS — nanomsg)
+
+A many-to-many mesh with no distinguished roles: every peer on the bus sends
+to and receives from every other peer, and a message is delivered to everyone
+except its sender. ZeroMQ has no direct equivalent (you'd emulate it with a
+PUB and a SUB socket per peer). Good for peer discovery, cluster gossip, and
+control planes where every node needs to hear every event.
+
+```mermaid
+flowchart LR
+    A([Peer A]) <--> B([Peer B])
+    A <--> C([Peer C])
+    A <--> D([Peer D])
+    B <--> C
+    B <--> D
+    C <--> D
+```
+
+```python
+from pynng import Bus0
+
+# each peer
+bus = Bus0(listen='tcp://127.0.0.1:5561')
+bus.dial('tcp://127.0.0.1:5562')     # dial every other peer
+bus.dial('tcp://127.0.0.1:5563')
+
+bus.send(b'node-1 joined')           # everyone else receives this
+print(bus.recv())                    # messages from any other peer
+```
+
+## Survey (SURVEYOR/RESPONDENT — nanomsg)
+
+A scatter/gather pattern with a deadline, unique to nanomsg/NNG. The
+**surveyor** broadcasts a question to every connected **respondent**, then
+collects answers until the survey deadline expires; late answers are
+discarded. It's the inverse of pub/sub—one-to-many *with replies*—and fits
+service discovery, voting/consensus, and "who is alive?" health checks.
+
+```mermaid
+sequenceDiagram
+    participant S as Surveyor
+    participant R1 as Respondent 1
+    participant R2 as Respondent 2
+    participant R3 as Respondent 3
+    S->>R1: who has capacity?
+    S->>R2: who has capacity?
+    S->>R3: who has capacity?
+    R1->>S: node-1: 4 slots
+    R3->>S: node-3: 2 slots
+    Note over S: deadline expires — node-2 never answered
+```
+
+```python
+from pynng import Surveyor0, Respondent0, Timeout
+
+# surveyor                              # each respondent
+sur = Surveyor0(                        # rsp = Respondent0(
+    listen='tcp://127.0.0.1:5565',      #     dial='tcp://127.0.0.1:5565')
+    survey_time=1000)  # 1s deadline    # question = rsp.recv()
+sur.send(b'who has capacity?')          # rsp.send(b'node-1: 4 slots')
+try:
+    while True:
+        print(sur.recv())               # answers until the deadline
+except Timeout:
+    pass                                # survey closed
+```
+
+## Choosing Between Them
+
+Reach for a **broker** (RabbitMQ) when messages must survive restarts, when
+producers and consumers aren't online at the same time, or when you want
+central visibility into queues. Reach for **ZeroMQ/nanomsg** when you're
+wiring components of one system together and want minimal latency and zero
+infrastructure—the pattern lives in the socket, and the "broker", if you need
+one at all, is a few lines of your own code.
