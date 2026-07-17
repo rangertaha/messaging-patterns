@@ -1,14 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
+An exchange receives messages from producers and routes them to queues.
 """
 __author__ = 'rangertaha <rangertaha@gmail.com>'
+from queues import Queue
 
-import pika
-from queue import Queue
 
 class Exchange(Queue):
-    def __init__(self, exchange='exchange-001', type='fanout'):
+    def __init__(self, exchange='exchange-001', exchange_type='fanout'):
         Queue.__init__(self)
-        self.channel.exchange_declare(exchange=exchange, type=type)
+        self.channel.exchange_declare(exchange=exchange,
+                                      exchange_type=exchange_type)
         self.exchange = exchange
-        self.type = type
+        self.exchange_type = exchange_type
